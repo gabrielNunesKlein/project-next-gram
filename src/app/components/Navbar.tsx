@@ -13,7 +13,7 @@ export default async function Navbar() {
 
         <div className='flex gap-4 items-center'>
             {session && session.user ? (
-                <div>
+                <div className='flex items-center space-x-4'>
                     <p>{session.user.name}</p>
                     <form action={async () => {
                     "use server"
