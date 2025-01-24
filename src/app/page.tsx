@@ -11,6 +11,11 @@ export default function Home() {
       <Link href={'/server'}>
         Página com server component
       </Link>
+
+      <Link href={'/middleware'}>
+        Página com middleware
+      </Link>
+
     </main>
   );
 }
