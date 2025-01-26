@@ -6,22 +6,24 @@ import { useFormState } from 'react-dom';
 import { User } from 'types/User';
 import Label from './Label';
 import { Button } from './Button';
+import ImagePreview from './ImagePreview';
+import { FlashMessage } from './FlashMessage';
 
 type ProfileFormProps = {
     user: User;
 }
 
 const ProfileForm: React.FC<ProfileFormProps> = ({ user }) => {
-    const [formState, formAction] = useFormState(updateUserProfile, {
+    const [formState, formAction] = React.useActionState(updateUserProfile, {
         message: "",
         type: "success"
     })
     return <div>
         {formState.message && (
-            <p>Algum texto</p>
+           <FlashMessage message={formState.message} type={formState.type} />
         )}
 
-        <form action="">
+        <form action={formAction} className='flex flex-col gap-4' encType='multipart/form-data'>
             <input type="hidden" name="id" value={user.id} />
             <div>
                 <Label htmlFor='name' text='Nome' />
@@ -34,7 +36,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ user }) => {
                     className='p-2 border border-zinc-300 roude w-full text-sm placeholder:text-zinc-500 focus:ring-0 focus:outline-none'
                 />
             </div>
-            <p>Image preview</p>
+            <ImagePreview />
             <div className="flex justify-end">
                 <Button type='submit' text='Salvar' />
             </div>

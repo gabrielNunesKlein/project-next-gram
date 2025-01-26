@@ -23,7 +23,7 @@ export default async function ProfilePage() {
                 <Image
                     src={user.image}
                     alt={`Perfil de ${user.name}`}
-                    className='w-80 h-80 p-4 object-cover'
+                    className='w-80 h-80 p-4 object-cover rounded-full'
                     width={320}
                     height={320}
                 />
