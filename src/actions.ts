@@ -78,3 +78,45 @@ export async function updateUserProfile(formState: FormState, formData: FormData
         type: "success"
     }
 }
+
+export async function createPost(
+  formState: FormState,
+  formData: FormData
+): Promise<FormState> {
+  const session = await auth();
+
+  if (!session) redirect("/");
+
+  const caption = formData.get("caption") as string;
+  const imageFile = formData.get("image") as File;
+
+  if (!caption || imageFile.size == 0) {
+    return { message: "Precisa de legeda e foto", type: "error" };
+  }
+
+  let imageUrl;
+  if (imageFile && imageFile.name !== "undefined") {
+    const uploadDir = path.join(process.cwd(), "public", "uploads");
+    await fs.mkdir(uploadDir, { recursive: true });
+
+    const filePath = path.join(uploadDir, imageFile.name);
+    const arrayBuffer = await imageFile.arrayBuffer();
+
+    await fs.writeFile(filePath, Buffer.from(arrayBuffer));
+
+    imageUrl = `/uploads/${imageFile.name}`;
+  }
+
+  await prisma.post.create({
+    data: {
+      imageUrl: imageUrl || "",
+      caption,
+      userId: session.user.userId,
+    },
+  });
+
+  return {
+    message: "Postagem criada com sucesso!",
+    type: "success",
+  };
+}
