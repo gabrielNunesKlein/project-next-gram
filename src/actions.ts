@@ -120,3 +120,26 @@ export async function createPost(
     type: "success",
   };
 }
+
+export async function getUsaersPosts(userId: string){
+
+    const session = await auth()
+
+    if (!session) redirect("/");
+
+    if(session.user.userId !== userId){
+        throw new Error("Não autorizado")
+    }
+
+    return await prisma.post.findMany({
+        where: { userId },
+        include: {
+            user: true,
+            likes: true,
+            comments: true
+        },
+        orderBy: {
+            createdAt: "desc"
+        }
+    })
+}
