@@ -121,7 +121,7 @@ export async function createPost(
   };
 }
 
-export async function getUsaersPosts(userId: string){
+export async function getUsersPosts(userId: string){
 
     const session = await auth()
 
