@@ -182,14 +182,11 @@ export async function getAllPosts(){
     })
 }
 
-export async function likePost(formState: FormState, formData: FormData) {
+export async function likePost(postId: string, userId: string) {
 
     const session = await auth()
 
     if(!session) redirect("/")
-    
-    const userId = formData.get("userId") as string
-    const postId = formData.get("postId") as string
 
     if(session.user.userId !== userId){
         throw new Error("Não autorizado.")
