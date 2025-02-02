@@ -1,4 +1,5 @@
 import { getAllPosts } from "@/actions";
+import Post from "@/components/Post";
 import { auth } from "auth";
 import Image from "next/image";
 import Link from "next/link";
@@ -25,7 +26,10 @@ export default async function Home() {
         {posts && posts.length > 0 ? (
           <div className="mt-8">
             {posts.map((post) => (
-              <>{post.caption}</>
+              <Post 
+              // @ts-ignore
+              post={post} 
+              currentUserId={userId} />
             ))}
           </div>
         ) : <p>Ainda não possui posts</p>}
