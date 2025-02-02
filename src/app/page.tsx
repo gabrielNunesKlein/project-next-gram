@@ -27,6 +27,7 @@ export default async function Home() {
           <div className="mt-8">
             {posts.map((post) => (
               <Post 
+              key={post.id}
               // @ts-ignore
               post={post} 
               currentUserId={userId} />

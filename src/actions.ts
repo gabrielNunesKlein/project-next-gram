@@ -181,3 +181,63 @@ export async function getAllPosts(){
         }
     })
 }
+
+export async function likePost(formState: FormState, formData: FormData) {
+
+    const session = await auth()
+
+    if(!session) redirect("/")
+    
+    const userId = formData.get("userId") as string
+    const postId = formData.get("postId") as string
+
+    if(session.user.userId !== userId){
+        throw new Error("Não autorizado.")
+    }
+
+    const existLike = await prisma.like.findFirst({
+        where: {
+            postId,
+            userId
+        }
+    });
+
+    if(existLike){
+        await prisma.like.delete({
+            where: {
+                id: existLike.id
+            }
+        })
+    } else {
+        await prisma.like.create({
+            data: {
+                postId,
+                userId
+            }
+        })
+    }
+
+    revalidatePath("/")
+}
+
+export async function addComment(postId: string, userId: string, content: string){
+
+    const session = await auth()
+
+    if(!session) redirect("/")
+
+    if(session.user.userId !== userId){
+        throw new Error("Não autorizado.")
+    }
+
+    await prisma.comment.create({
+        data: {
+            postId,
+            userId,
+            content
+        }
+    })
+
+    revalidatePath("/")
+
+}
