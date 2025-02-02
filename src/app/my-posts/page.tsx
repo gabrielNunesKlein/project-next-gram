@@ -21,7 +21,7 @@ const MyPostsPage: React.FC = async () => {
     const posts = await getUsersPosts(userId)
 
     return (
-        <div className='mx-auto my-10 p-4'>
+        <div className='container mx-auto my-10 p-4'>
             <h1 className='text-[2rem] leading-10 font-semibold text-center mb-8'>
                 Minhas Postagens
             </h1>
@@ -38,13 +38,15 @@ const MyPostsPage: React.FC = async () => {
                 <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6'>
                     {posts.map((post) => (
                         <div className='border rounded p-4 shadow-sm' key={post.id}>
-                            <Image 
-                                src={post.imageUrl}
-                                alt={post.caption || ''}
-                                className='w-[366px] h-[218px] object-cover mb-4 rounded'
-                                width={366}
-                                height={218}
-                            />
+                            <div className='w-full relative h-[218px] my-5'>
+                                <Image 
+                                    src={post.imageUrl}
+                                    alt={post.caption || ''}
+                                    className='object-cover mb-4 rounded'
+                                    fill
+                                    //quality={50}
+                                />
+                            </div>
                             {post.caption && (
                                 <p className="mb-2 text-sm font-medium">
                                     {post.caption}

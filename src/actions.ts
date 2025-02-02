@@ -163,3 +163,21 @@ export async function deletePost(formData: FormData) {
     revalidatePath("/my-posts")
     redirect("/my-posts")
 }
+
+export async function getAllPosts(){
+
+    return await prisma.post.findMany({
+        include: {
+            user: true,
+            likes: true,
+            comments: {
+                include: {
+                    user: true
+                }
+            }
+        },
+        orderBy: {
+            createdAt: "desc"
+        }
+    })
+}
