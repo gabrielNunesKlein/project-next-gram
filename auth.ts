@@ -1,6 +1,7 @@
 import type { NextAuthConfig } from "next-auth";
 import NextAuth from "next-auth";
 
+import facebook from "next-auth/providers/facebook"
 import google from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcryptjs";
@@ -43,7 +44,7 @@ const config = {
               return { id: user.id, name: user.name, email: user.email };
             },
           }),
-        google],
+        google, facebook],
     callbacks: {
         // authorized({ request, auth }) {
         //     const { pathname } = request.nextUrl

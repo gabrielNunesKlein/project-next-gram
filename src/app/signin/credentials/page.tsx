@@ -13,16 +13,20 @@ export default function CredentialsPage() {
             async (formData: FormData) => {
                 "use server"
 
-                const email = formData.get("email") as string
-                const password = formData.get("password") as string
+                try {
+                    const email = formData.get("email") as string
+                    const password = formData.get("password") as string
 
-                await signIn("credentials", {
-                    redirect: false,
-                    email,
-                    password,
-                });
+                    await signIn("credentials", {
+                        redirect: false,
+                        email,
+                        password,
+                    });
 
-                redirect("/")
+                    redirect("/")
+                } catch(err) {
+                    throw new Error("Erro " + err)
+                }
 
         }} className="p-5 border rounded-lg shadow-md">
           <h2 className="text-lg font-bold mb-3">Login</h2>

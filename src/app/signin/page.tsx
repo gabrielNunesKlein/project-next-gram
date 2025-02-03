@@ -1,10 +1,10 @@
 import React from 'react'
 import { signIn, providerMap } from 'auth'
 
-import { BsGoogle } from 'react-icons/bs'
+import { BsGoogle, BsFacebook } from 'react-icons/bs'
 import { redirect } from 'next/navigation'
 
-const icons = [{ name: "Google", icon: <BsGoogle /> }]
+const icons = [{ name: "Google", icon: <BsGoogle /> }, { name: "Facebook", icon: <BsFacebook /> }]
 
 export default function SigninPage() {
 
