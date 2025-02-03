@@ -2,10 +2,11 @@ import React from 'react'
 import { signIn, providerMap } from 'auth'
 
 import { BsGoogle } from 'react-icons/bs'
+import { redirect } from 'next/navigation'
 
 const icons = [{ name: "Google", icon: <BsGoogle /> }]
 
-export default async function SigninPage() {
+export default function SigninPage() {
 
   const findIcon = (name: string ) => {
     const iconFind = icons.find((item) => item.name === name)
@@ -23,6 +24,11 @@ export default async function SigninPage() {
             key={provider.id} 
             action={async () => {
                 "use server"
+
+                if(provider.name === "Credentials") {
+                  redirect('/signin/credentials')
+                }
+
                 await signIn(provider.id, { redirectTo: "/" })
             }}>
                 <button className='h-10 px-6 py-1 font-medium border border-zinc-600 flex items-center gap-2 rounded hover:bg-slate-50'>
